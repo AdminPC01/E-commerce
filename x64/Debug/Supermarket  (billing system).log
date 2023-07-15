@@ -1,0 +1,5 @@
+﻿  Supermarket.cpp
+C:\Users\AdminPC\source\repos\Supermarket  (billing system)\Supermarket.cpp(22,6): warning C4101: 'balance': unreferenced local variable
+C:\Users\AdminPC\source\repos\Supermarket  (billing system)\Supermarket.cpp(48): warning C4715: 'Supermarket::login_user': not all control paths return a value
+Supermarket.obj : error LNK2019: unresolved external symbol "private: void __cdecl Supermarket::change_stock(int,int)" (?change_stock@Supermarket@@AEAAXHH@Z) referenced in function "public: bool __cdecl Supermarket::is_placed(int,int)" (?is_placed@Supermarket@@QEAA_NHH@Z)
+C:\Users\AdminPC\source\repos\Supermarket  (billing system)\x64\Debug\Supermarket  (billing system).exe : fatal error LNK1120: 1 unresolved externals
