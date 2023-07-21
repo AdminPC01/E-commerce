@@ -47,10 +47,94 @@ bool Ecommerce::login_user() {
 	}
 }
 
+bool Ecommerce::change_account() {
+	
+	std::cout << "Change username - 1 / Change - password 2" << std::endl;
+	int choice;
+
+	if (choice == 1) {
+		std::string name;
+		std::cout <<  "Enter your new username" << std::endl;
+		std::cin >> name;
+
+		for (int i = 0; i < clients.size(); i++) {
+			if (client->name == clients[i].name &&
+				client->password == clients[i].password) {
+				clients[i].name = name;
+				std::cout << "Username was succesfully changed" << std::endl;
+			}
+		}
+	}
+	else if(choice == 2)
+	{
+		std::string password;
+		std::cout << "Enter your new password" << std::endl;
+		std::cin >> password;
+
+		for (int i = 0; i < clients.size(); i++) {
+			if (client->name == clients[i].name &&
+				client->password == clients[i].password) {
+				clients[i].password = password;
+				std::cout << "Password was succesfully changed" << std::endl;
+			}
+		}
+	}
+	else
+	{
+
+	}
+}
+
 void Ecommerce::change_stock(int id, int quantity) {
 	products.erase(products.begin() + id);
 }
 
+bool Ecommerce::isStaff() {
+	if (client->name == "Adam" && client->password == "1345") {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Ecommerce::add_products() {
+	
+
+
+		Product product;
+		std::cout << "Enter product name" << std::endl;
+		std::cin >> product.name;
+		std::cout << "Enter product price" << std::endl;
+		std::cin >> product.price;
+		std::cout << "Enter product quantity" << std::endl;
+		std::cin >> product.quantity;
+	
+}
+
+void Ecommerce::delete_product() {
+
+	std::string product_name;
+	std::cout << "Which product do you want to delete ?" << std::endl;
+
+	/*for (std::vector<Product>::iterator it = products.begin(); 
+		it != products.end(); it++) {
+		std::cout << it->name << " /";
+	}*/
+
+	for (auto product : products) {
+		std::cout << " /" << product.name;
+	}
+
+	std::cin >> product_name;
+
+	for (auto product : products) {
+		
+		if (product.name == product_name) {
+			products.erase(std::remove(products.begin(), products.end(), product), products.end());
+		}
+	}
+}
 
 void Ecommerce::offer_products(){
 	int choice, quantity;
@@ -77,11 +161,8 @@ void Ecommerce::offer_products(){
 
 bool Ecommerce::make_order(int id, int quantity) {
 
-	
-
-	auto* product = &products[id];
-
-	if (product) {
+		if (products.size() > id) {
+		auto* product = &products[id];
 
 		if (product->quantity >= quantity) {
 
@@ -112,28 +193,50 @@ bool Ecommerce::make_order(int id, int quantity) {
 
 
 void Ecommerce::user_interface() {
-	if (client) {
-
+	if (this->client) {
+		offer_products();
+		if (this->isStaff()) {
+			add_products();	}
 	}
 	else {
 		int choice;
-		bool _continue  = true; // c
+		bool _continue  = true; // 
 
-		while(_continue)
-			std::cout << "Register - 1/ Login - 3/ Quit - 5";
-			std::cin >> choice;
+		while (_continue) {
+			if (!client) {
+				std::cout << "Register - 1/ Login - 3/ Quit - 5";
+				std::cin >> choice;
 
-			if (choice == 1) {
-				this->register_user();
+				if (choice == 1) {
+					this->register_user();
+				}
+				else if (choice == 3)
+				{
+					this->login_user();
+				}
+				else if (choice == 5)
+				{
+					_continue = false;
+				}
 			}
-			else if(choice == 3)
+			else
 			{
-				this->login_user();
+				std::cout << "1 - Make an order/ Change account/ Quit";
+				std::cin >> choice;
+
+				if (choice == 1) {
+					this->register_user();
+				}
+				else if (choice == 3)
+				{
+					this->login_user();
+				}
+				else if (choice == 5)
+				{
+					_continue = false;
+				}
 			}
-			else if(choice == 3)
-			{
-				_continue = false;
-			} 
+		}
 	}
 }
 
